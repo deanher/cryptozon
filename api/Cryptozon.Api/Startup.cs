@@ -1,8 +1,12 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using System;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Serilog;
+using Serilog.Core;
+using Serilog.Events;
 
 namespace Cryptozon.Api
 {
@@ -23,7 +27,23 @@ namespace Cryptozon.Api
       var appSettings = Configuration.Get<AppSettings>();
 
       services.Configure<AppSettings>(Configuration);
+      ConfigureLogging(appSettings.Logging, HostingEnvironment);
       services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+    }
+
+    private void ConfigureLogging(Logging loggingSettings, IHostingEnvironment env)
+    {
+      Enum.TryParse(loggingSettings.Level, out LogEventLevel logEventLevel);
+
+      var logConfig = new LoggerConfiguration()
+        .Enrich.FromLogContext()
+        .MinimumLevel.ControlledBy(new LoggingLevelSwitch(logEventLevel))
+        .WriteTo.RollingFile(loggingSettings.OutputPath, outputTemplate: loggingSettings.OutputTemplate);
+
+      if (env.IsDevelopment())
+        logConfig.WriteTo.Console(logEventLevel, loggingSettings.OutputTemplate);
+
+      Log.Logger = logConfig.CreateLogger();
     }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
