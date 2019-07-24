@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Cors.Infrastructure;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -29,7 +30,17 @@ namespace Cryptozon.Api
       services.Configure<AppSettings>(Configuration);
       ConfigureLogging(appSettings.Logging, HostingEnvironment);
 
+      services.AddCors(ConfigureCors(appSettings));
       services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+    }
+
+    private static Action<CorsOptions> ConfigureCors(AppSettings appSettings)
+    {
+      return options => options.AddPolicy("CorsPolicy",
+        builder => builder.WithOrigins(appSettings.AllowedHosts)
+          .AllowAnyHeader()
+          .AllowAnyMethod()
+          .AllowCredentials());
     }
 
     private void ConfigureLogging(Logging loggingSettings, IHostingEnvironment env)
@@ -55,15 +66,10 @@ namespace Cryptozon.Api
       }
 
       loggerFactory.AddSerilog();
+      app.UseCors("CorsPolicy");
 
       app.UseMvc();
     }
-  }
-
-  public class AppSettings
-  {
-    public Logging Logging { get; set; }
-    public string AllowedHosts { get; set; }
   }
 
   public class Logging
