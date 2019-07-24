@@ -47,12 +47,14 @@ namespace Cryptozon.Api
       Log.Logger = logConfig.CreateLogger();
     }
 
-    public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+    public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
     {
       if (env.IsDevelopment())
       {
         app.UseDeveloperExceptionPage();
       }
+
+      loggerFactory.AddSerilog();
 
       app.UseMvc();
     }
