@@ -3,17 +3,19 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Moq;
 using Xunit;
 
 namespace Cryptozon.Test
 {
-  public class ProductRetrievalShould
+  public class ProductsRetrievalShould
   {
     [Fact]
     public async Task RetrieveProducts()
     {
       //given
-      var productRetrieval = new ProductRetrieval();
+      var mock = new Mock<IProductsRepo>();
+      var productRetrieval = new ProductsRetrieval();
 
       //when
       var products = await productRetrieval.RetrieveProductsAsync();
@@ -24,11 +26,15 @@ namespace Cryptozon.Test
     }
   }
 
-  public class ProductRetrieval
+  public interface IProductsRepo
+  {
+  }
+
+  public class ProductsRetrieval
   {
     public async Task<IEnumerable<Product>> RetrieveProductsAsync()
     {
-      return Enumerable.Empty<Product>();
+      return new[] { new Product() };
     }
   }
 
