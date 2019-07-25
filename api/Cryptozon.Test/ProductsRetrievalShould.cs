@@ -15,7 +15,12 @@ namespace Cryptozon.Test
     {
       //given
       var mock = new Mock<IProductsRepo>();
-      var productRetrieval = new ProductsRetrieval();
+
+      var expected = Task.FromResult(new[] { new Product() }.AsEnumerable());
+      mock.Setup(repo => repo.GetProductsAsync())
+          .Returns(expected);
+
+      var productRetrieval = new ProductsRetrieval(mock.Object);
 
       //when
       var products = await productRetrieval.RetrieveProductsAsync();
@@ -28,13 +33,21 @@ namespace Cryptozon.Test
 
   public interface IProductsRepo
   {
+    Task<IEnumerable<Product>> GetProductsAsync();
   }
 
   public class ProductsRetrieval
   {
+    private readonly IProductsRepo _productsRepo;
+
+    public ProductsRetrieval(IProductsRepo productsRepo)
+    {
+      _productsRepo = productsRepo;
+    }
+
     public async Task<IEnumerable<Product>> RetrieveProductsAsync()
     {
-      return new[] { new Product() };
+      return await _productsRepo.GetProductsAsync();
     }
   }
 
