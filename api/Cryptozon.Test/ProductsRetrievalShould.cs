@@ -1,8 +1,6 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Cryptozon.Domain.Products;
 using Moq;
 using Xunit;
 
@@ -29,29 +27,5 @@ namespace Cryptozon.Test
       Assert.NotNull(products);
       Assert.NotEmpty(products);
     }
-  }
-
-  public interface IProductsRepo
-  {
-    Task<IEnumerable<Product>> GetProductsAsync();
-  }
-
-  public class ProductsRetrieval
-  {
-    private readonly IProductsRepo _productsRepo;
-
-    public ProductsRetrieval(IProductsRepo productsRepo)
-    {
-      _productsRepo = productsRepo;
-    }
-
-    public async Task<IEnumerable<Product>> RetrieveProductsAsync()
-    {
-      return await _productsRepo.GetProductsAsync();
-    }
-  }
-
-  public class Product
-  {
   }
 }
