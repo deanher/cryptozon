@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using System.Net;
+﻿using System.Net;
 using System.Threading.Tasks;
 using Cryptozon.ApplicationService;
 using Cryptozon.Domain.Products;
@@ -23,8 +22,8 @@ namespace Cryptozon.Api.Controllers
       {
         var service = new ProductsRetrieval(_productsRepo);
         var result = await service.RetrieveProductsAsync();
-        if (!result.Any())
-          return new ObjectResult("Something went wrong. Please try again later."){StatusCode = (int)HttpStatusCode.InternalServerError};
+        if (!service.HasError)
+          return new ObjectResult(service.ErrorMessage){StatusCode = (int)HttpStatusCode.InternalServerError};
 
         return Ok(result);
       }
