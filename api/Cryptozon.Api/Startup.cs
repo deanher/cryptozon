@@ -23,6 +23,19 @@ namespace Cryptozon.Api
     public IConfiguration Configuration { get; }
     public IHostingEnvironment HostingEnvironment { get; }
 
+    public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
+    {
+      if (env.IsDevelopment())
+      {
+        app.UseDeveloperExceptionPage();
+      }
+
+      loggerFactory.AddSerilog();
+      app.UseCors("CorsPolicy");
+
+      app.UseMvc();
+    }
+
     public void ConfigureServices(IServiceCollection services)
     {
       var appSettings = Configuration.Get<AppSettings>();
@@ -34,7 +47,7 @@ namespace Cryptozon.Api
       services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
     }
 
-    private static Action<CorsOptions> ConfigureCors(AppSettings appSettings)
+    private Action<CorsOptions> ConfigureCors(AppSettings appSettings)
     {
       return options => options.AddPolicy("CorsPolicy",
         builder => builder.WithOrigins(appSettings.AllowedHosts)
@@ -57,25 +70,5 @@ namespace Cryptozon.Api
 
       Log.Logger = logConfig.CreateLogger();
     }
-
-    public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
-    {
-      if (env.IsDevelopment())
-      {
-        app.UseDeveloperExceptionPage();
-      }
-
-      loggerFactory.AddSerilog();
-      app.UseCors("CorsPolicy");
-
-      app.UseMvc();
-    }
-  }
-
-  public class Logging
-  {
-    public string Level { get; set; }
-    public string OutputTemplate { get; set; }
-    public string OutputPath { get; set; }
   }
 }
