@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Cryptozon.Domain.Products;
 
-namespace Cryptozon.Test
+namespace Cryptozon.ApplicationService
 {
   public class ProductsRetrieval
   {

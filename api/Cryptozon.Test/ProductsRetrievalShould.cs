@@ -1,5 +1,6 @@
 using System.Linq;
 using System.Threading.Tasks;
+using Cryptozon.ApplicationService;
 using Cryptozon.Domain.Products;
 using Moq;
 using Xunit;

@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cryptozon.Test", "Cryptozon
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cryptozon.Domain", "Cryptozon.Domain\Cryptozon.Domain.csproj", "{93BA9301-E34A-4C0B-A23D-BF292045AC41}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cryptozon.ApplicationService", "Cryptozon.ApplicationService\Cryptozon.ApplicationService.csproj", "{4D8CBC4A-307C-499E-A5F5-79032B271B76}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{93BA9301-E34A-4C0B-A23D-BF292045AC41}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{93BA9301-E34A-4C0B-A23D-BF292045AC41}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{93BA9301-E34A-4C0B-A23D-BF292045AC41}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4D8CBC4A-307C-499E-A5F5-79032B271B76}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4D8CBC4A-307C-499E-A5F5-79032B271B76}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4D8CBC4A-307C-499E-A5F5-79032B271B76}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4D8CBC4A-307C-499E-A5F5-79032B271B76}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
