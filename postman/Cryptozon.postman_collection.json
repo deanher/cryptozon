@@ -6,6 +6,84 @@
 	},
 	"item": [
 		{
+			"name": "CoinMarketCap",
+			"item": [
+				{
+					"name": "Latest Cryptocurrencies",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-CMC_PRO_API_KEY",
+								"value": "0298bbd0-0320-44ae-8623-bfd9181bd228",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept-Encoding",
+								"value": "deflate/gzip",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest",
+							"protocol": "https",
+							"host": [
+								"pro-api",
+								"coinmarketcap",
+								"com"
+							],
+							"path": [
+								"v1",
+								"cryptocurrency",
+								"listings",
+								"latest"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Products",
+			"item": [
+				{
+					"name": "Products",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/v1/products",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"v1",
+								"products"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
 			"name": "Values",
 			"request": {
 				"method": "GET",
