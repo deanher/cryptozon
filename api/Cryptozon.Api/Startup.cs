@@ -1,4 +1,6 @@
 ﻿using System;
+using Cryptozon.Domain.Products;
+using Cryptozon.Infrastructure;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Cors.Infrastructure;
 using Microsoft.AspNetCore.Hosting;
@@ -45,6 +47,13 @@ namespace Cryptozon.Api
 
       services.AddCors(ConfigureCors(appSettings));
       services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+
+      ConfigureDependencies(services, appSettings);
+    }
+
+    private void ConfigureDependencies(IServiceCollection services, AppSettings appSettings)
+    {
+      services.AddTransient<IProductsRepo, ProductsRepo>(provider => new ProductsRepo(appSettings.CoinMarketCap.BaseUrl, appSettings.CoinMarketCap.Key));
     }
 
     private Action<CorsOptions> ConfigureCors(AppSettings appSettings)

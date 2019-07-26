@@ -18,6 +18,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Cryptozon.ApplicationService\Cryptozon.ApplicationService.csproj" />
     <ProjectReference Include="..\Cryptozon.Domain\Cryptozon.Domain.csproj" />
+    <ProjectReference Include="..\Cryptozon.Infrastructure\Cryptozon.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>
