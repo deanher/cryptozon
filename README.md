@@ -12,13 +12,22 @@
 * docs    - contains documentation
 * postman - contains postman smoke tests  
 
+## Assumptions
+
+* Users/shoppers can purchase multiple cryptos at a time.
+* Users/shoppers can purchase multiple or part of a crypto.
+* There is enough stock of crypto coins for purchases.
+* Purchase currency will be USD.
+* Payment will be handled after the purchase is actioned by user and confirmed by the system, based on experience with online stores.
+* All that is required for payment is the order reference and the total amount.  
+
 ## Goal  
 
 The goal of the assignment is to give us insight on how confident you are with the c# stack in a e-commerce context
 
 ### Description/Requirements  
 
-This assignment is to build the backend of a simple web commerce cart by using crypto currencies as product. 
+This assignment is to build the backend of a simple web commerce cart by using crypto currencies as product.  
 Create an API that allow a user to buy crypto currencies from a list.  
 The crypto currency data is pulled from https://coinmarketcap.com/api/ .
 
