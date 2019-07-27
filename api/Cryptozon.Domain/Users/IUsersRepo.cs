@@ -2,7 +2,7 @@
 
 namespace Cryptozon.Domain.Users
 {
-  public interface IUserRepo
+  public interface IUsersRepo
   {
     Task<User> GetUserAsync(string username);
   }

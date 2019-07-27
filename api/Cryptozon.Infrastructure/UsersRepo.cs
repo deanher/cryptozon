@@ -1,15 +1,14 @@
-﻿using System.Data;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Cryptozon.Domain.Users;
 using Dapper;
 
 namespace Cryptozon.Infrastructure
 {
-  public class UserRepo : IUserRepo
+  public class UsersRepo : IUsersRepo
   {
     private readonly IDatabaseAdapter _database;
 
-    public UserRepo(IDatabaseAdapter database)
+    public UsersRepo(IDatabaseAdapter database)
     {
       _database = database;
     }
@@ -19,8 +18,8 @@ namespace Cryptozon.Infrastructure
       var param = new DynamicParameters();
       param.Add(nameof(username), username);
 
-      var result = await _database.ExecuteAsync<dynamic>("sp_user_get", param);
-      return User.Create(result.Username, result.PasswordSalt, result.PasswordHash, result.UserId);
+      var result = await _database.ExecuteAsync<User>("sp_user_get", param);
+      return new User(result.Username, result.PasswordSalt, result.PasswordHash, result.UserId);
     }
   }
 }

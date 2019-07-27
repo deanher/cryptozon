@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Cryptozon.ApplicationService.Purchasing;
-using Cryptozon.Domain;
 using Cryptozon.Domain.Purchases;
 using Cryptozon.Domain.Users;
 using Moq;
@@ -30,8 +29,8 @@ namespace Cryptozon.Test.ApplicationServices
                                                         It.IsAny<IEnumerable<(int CoinId, decimal Quantity, decimal UnitPrice)>>()))
                       .ReturnsAsync(expectedPurchaseConfirmation);
 
-      var mockUserRepo = new Mock<IUserRepo>();
-      var expectedUser = User.Create("deanher@gmail.com", Guid.NewGuid().ToString("N"), Guid.NewGuid().ToString("N"), Guid.NewGuid());
+      var mockUserRepo = new Mock<IUsersRepo>();
+      var expectedUser = new User("deanher@gmail.com", Guid.NewGuid().ToString("N"), Guid.NewGuid().ToString("N"), Guid.NewGuid());
       mockUserRepo.Setup(repo => repo.GetUserAsync(It.IsAny<string>()))
                   .ReturnsAsync(expectedUser); 
       var productsPurchase = new ProductsPurchase(mockPurchaseRepo.Object, mockUserRepo.Object);

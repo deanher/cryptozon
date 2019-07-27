@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using Cryptozon.Domain;
 using Cryptozon.Domain.Purchases;
 using Cryptozon.Domain.Users;
 using Serilog;
@@ -12,12 +10,12 @@ namespace Cryptozon.ApplicationService.Purchasing
   public class ProductsPurchase : ApplicationServiceBase
   {
     private readonly IPurchasesRepo _purchasesRepo;
-    private readonly IUserRepo _userRepo;
+    private readonly IUsersRepo _usersRepo;
 
-    public ProductsPurchase(IPurchasesRepo purchasesRepo, IUserRepo userRepo)
+    public ProductsPurchase(IPurchasesRepo purchasesRepo, IUsersRepo usersRepo)
     {
       _purchasesRepo = purchasesRepo;
-      _userRepo = userRepo;
+      _usersRepo = usersRepo;
     }
 
     public async Task<PurchaseConfirmation> MakePurchaseAsync(string username,
@@ -26,7 +24,7 @@ namespace Cryptozon.ApplicationService.Purchasing
 
       try
       {
-        var user = await _userRepo.GetUserAsync(username);
+        var user = await _usersRepo.GetUserAsync(username);
         var purchaseConfirmation = await _purchasesRepo.PurchaseAsync(user.UserId, coins);
         // send notification - todo: Domain event
         return purchaseConfirmation;
