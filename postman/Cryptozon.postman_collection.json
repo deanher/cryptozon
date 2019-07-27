@@ -58,6 +58,24 @@
 			"item": [
 				{
 					"name": "Products",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "df75a67e-a1fb-455a-8d9b-2a27723fd797",
+								"exec": [
+									"pm.test(\"Correct data fields are returned\", () => {",
+									"    let jsonData = pm.response.json();",
+									"   pm.expect(jsonData[0]).to.have.property(\"id\");",
+									"   pm.expect(jsonData[0]).to.have.property(\"name\");",
+									"   pm.expect(jsonData[0]).to.have.property(\"symbol\");",
+									"   pm.expect(jsonData[0]).to.have.property(\"price\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "GET",
 						"header": [],
