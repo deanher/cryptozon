@@ -1,5 +1,3 @@
-using System;
-
 namespace Cryptozon.Infrastructure
 {
   public class Quote
