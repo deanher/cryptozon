@@ -15,12 +15,12 @@ namespace Cryptozon.ApplicationService.Purchasing
     }
 
     public async Task<PurchaseConfirmation> MakePurchaseAsync(string userId,
-                                                              IEnumerable<(int CoinId, decimal Quantity, decimal
-                                                                UnitPrice)> coins)
+                                                              IEnumerable<(int CoinId, decimal Quantity, decimal UnitPrice)> coins)
     {
       // record purchase
+      var purchaseConfirmation = await _purchasesRepo.PurchaseAsync(userId, coins);
       // send notification - todo: Domain event
-      return PurchaseConfirmation.Create(coins.Sum(i => i.Quantity * i.UnitPrice));
+      return purchaseConfirmation;
     }
   }
 }
