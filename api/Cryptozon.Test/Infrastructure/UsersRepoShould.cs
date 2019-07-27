@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Data;
 using System.Threading.Tasks;
 using Cryptozon.Domain.Users;
 using Cryptozon.Infrastructure;
@@ -21,8 +22,8 @@ namespace Cryptozon.Test.Infrastructure
                                   Guid.NewGuid().ToString("N"),
                                   Guid.NewGuid());
       mockDatabaseAdapter.Setup(adapter =>
-                                  adapter.ExecuteAsync<User>(It.IsAny<string>(), It.IsAny<DynamicParameters>()))
-                         .ReturnsAsync(expectedUser);
+                                  adapter.ExecuteQueryAsync<User>(It.IsAny<string>(), It.IsAny<DynamicParameters>(), It.IsAny<CommandType>()))
+                         .ReturnsAsync(new[] { expectedUser });
 
       var usersRepo = new UsersRepo(mockDatabaseAdapter.Object);
 

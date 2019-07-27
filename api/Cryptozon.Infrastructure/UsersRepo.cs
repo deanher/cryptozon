@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Linq;
+using System.Threading.Tasks;
 using Cryptozon.Domain.Users;
 using Dapper;
 
@@ -18,8 +19,8 @@ namespace Cryptozon.Infrastructure
       var param = new DynamicParameters();
       param.Add(nameof(username), username);
 
-      var result = await _database.ExecuteAsync<User>("sp_user_get", param);
-      return new User(result.Username, result.PasswordSalt, result.PasswordHash, result.UserId);
+      var result = await _database.ExecuteQueryAsync<User>("sp_user_get", param);
+      return result.Single();
     }
   }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using Cryptozon.Domain.Purchases;
@@ -26,7 +27,7 @@ namespace Cryptozon.Test.Infrastructure
 
       var expected = PurchaseConfirmation.Create(purchasedCoins.Sum(i => i.Quantity * i.UnitPrice), Guid.NewGuid());
       mockDatabaseAdaper.Setup(repo => repo.ExecuteAsync(It.IsAny<string>(),
-                                                         It.IsAny<DynamicParameters>()));
+                                                         It.IsAny<DynamicParameters>(), It.IsAny<CommandType>()));
 
       var purchasesRepo = new PurchasesRepo(mockDatabaseAdaper.Object);
 
