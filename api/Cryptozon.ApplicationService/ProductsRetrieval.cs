@@ -16,7 +16,7 @@ namespace Cryptozon.ApplicationService
       _productsRepo = productsRepo;
     }
 
-    public bool HasError => string.IsNullOrWhiteSpace(ErrorMessage);
+    public bool HasError => !string.IsNullOrWhiteSpace(ErrorMessage);
     public string ErrorMessage { get; private set; }
 
     public async Task<IEnumerable<Product>> RetrieveProductsAsync()
