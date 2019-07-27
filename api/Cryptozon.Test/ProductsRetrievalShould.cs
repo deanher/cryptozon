@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 using Cryptozon.ApplicationService;
@@ -15,9 +16,9 @@ namespace Cryptozon.Test
       //given
       var mock = new Mock<IProductsRepo>();
 
-      var expected = Task.FromResult(new[] { new Product() }.AsEnumerable());
+      var expected = new[] { Product.Create("Bitcoin", "BTC", 10087.3779318m, DateTime.Now) }.AsEnumerable();
       mock.Setup(repo => repo.GetProductsAsync())
-          .Returns(expected);
+          .ReturnsAsync(expected);
 
       var productRetrieval = new ProductsRetrieval(mock.Object);
 

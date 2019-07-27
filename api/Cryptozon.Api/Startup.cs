@@ -53,7 +53,8 @@ namespace Cryptozon.Api
 
     private void ConfigureDependencies(IServiceCollection services, AppSettings appSettings)
     {
-      services.AddTransient<IProductsRepo, ProductsRepo>(provider => new ProductsRepo(appSettings.CoinMarketCap.BaseUrl, appSettings.CoinMarketCap.Key));
+      services.AddTransient<IHttpRestClient, RestSharpClient>(provider => new RestSharpClient(appSettings.CoinMarketCap.BaseUrl));
+      services.AddTransient<IProductsRepo, ProductsRepo>(provider => new ProductsRepo(provider.GetService<IHttpRestClient>(), appSettings.CoinMarketCap.Key));
     }
 
     private Action<CorsOptions> ConfigureCors(AppSettings appSettings)
