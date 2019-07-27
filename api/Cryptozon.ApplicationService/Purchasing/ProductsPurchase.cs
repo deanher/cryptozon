@@ -1,12 +1,14 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Cryptozon.Domain;
 using Cryptozon.Domain.Users;
+using Serilog;
 
 namespace Cryptozon.ApplicationService.Purchasing
 {
-  public class ProductsPurchase
+  public class ProductsPurchase : ApplicationServiceBase
   {
     private readonly IPurchasesRepo _purchasesRepo;
     private readonly IUserRepo _userRepo;
@@ -21,10 +23,20 @@ namespace Cryptozon.ApplicationService.Purchasing
                                                               IEnumerable<(int CoinId, decimal Quantity, decimal UnitPrice)> coins)
     {
 
-      var user = await _userRepo.GetUserAsync(username);
-      var purchaseConfirmation = await _purchasesRepo.PurchaseAsync(user.UserId, coins);
-      // send notification - todo: Domain event
-      return purchaseConfirmation;
+      try
+      {
+        var user = await _userRepo.GetUserAsync(username);
+        var purchaseConfirmation = await _purchasesRepo.PurchaseAsync(user.UserId, coins);
+        // send notification - todo: Domain event
+        return purchaseConfirmation;
+      }
+      catch (Exception ex)
+      {
+        ErrorMessage = "Your purchase chould not be completed at this time. Please try again later.";
+        Log.Error(ex, ErrorMessage);
+      }
+
+      return null;
     }
   }
 }
