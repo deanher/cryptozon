@@ -1,4 +1,6 @@
 ﻿using System;
+using Cryptozon.Domain.Products;
+using Cryptozon.Infrastructure;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Cors.Infrastructure;
 using Microsoft.AspNetCore.Hosting;
@@ -23,6 +25,19 @@ namespace Cryptozon.Api
     public IConfiguration Configuration { get; }
     public IHostingEnvironment HostingEnvironment { get; }
 
+    public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
+    {
+      if (env.IsDevelopment())
+      {
+        app.UseDeveloperExceptionPage();
+      }
+
+      loggerFactory.AddSerilog();
+      app.UseCors("CorsPolicy");
+
+      app.UseMvc();
+    }
+
     public void ConfigureServices(IServiceCollection services)
     {
       var appSettings = Configuration.Get<AppSettings>();
@@ -32,9 +47,17 @@ namespace Cryptozon.Api
 
       services.AddCors(ConfigureCors(appSettings));
       services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+
+      ConfigureDependencies(services, appSettings);
     }
 
-    private static Action<CorsOptions> ConfigureCors(AppSettings appSettings)
+    private void ConfigureDependencies(IServiceCollection services, AppSettings appSettings)
+    {
+      services.AddTransient<IHttpRestClient, RestSharpClient>(provider => new RestSharpClient(appSettings.CoinMarketCap.BaseUrl));
+      services.AddTransient<IProductsRepo, ProductsRepo>(provider => new ProductsRepo(provider.GetService<IHttpRestClient>(), appSettings.CoinMarketCap.Key));
+    }
+
+    private Action<CorsOptions> ConfigureCors(AppSettings appSettings)
     {
       return options => options.AddPolicy("CorsPolicy",
         builder => builder.WithOrigins(appSettings.AllowedHosts)
@@ -57,25 +80,5 @@ namespace Cryptozon.Api
 
       Log.Logger = logConfig.CreateLogger();
     }
-
-    public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
-    {
-      if (env.IsDevelopment())
-      {
-        app.UseDeveloperExceptionPage();
-      }
-
-      loggerFactory.AddSerilog();
-      app.UseCors("CorsPolicy");
-
-      app.UseMvc();
-    }
-  }
-
-  public class Logging
-  {
-    public string Level { get; set; }
-    public string OutputTemplate { get; set; }
-    public string OutputPath { get; set; }
   }
 }
