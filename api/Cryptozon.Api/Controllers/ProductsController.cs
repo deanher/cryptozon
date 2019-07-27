@@ -22,7 +22,7 @@ namespace Cryptozon.Api.Controllers
       {
         var service = new ProductsRetrieval(_productsRepo);
         var result = await service.RetrieveProductsAsync();
-        if (!service.HasError)
+        if (service.HasError)
           return new ObjectResult(service.ErrorMessage){StatusCode = (int)HttpStatusCode.InternalServerError};
 
         return Ok(result);
