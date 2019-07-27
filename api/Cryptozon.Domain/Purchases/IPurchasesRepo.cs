@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Cryptozon.Domain
+namespace Cryptozon.Domain.Purchases
 {
   public interface IPurchasesRepo
   {

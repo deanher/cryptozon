@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Cryptozon.Domain
+namespace Cryptozon.Domain.Purchases
 {
   public class PurchaseConfirmation
   {

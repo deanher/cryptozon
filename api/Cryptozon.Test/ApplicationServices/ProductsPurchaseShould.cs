@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Cryptozon.ApplicationService.Purchasing;
 using Cryptozon.Domain;
+using Cryptozon.Domain.Purchases;
 using Cryptozon.Domain.Users;
 using Moq;
 using Xunit;
