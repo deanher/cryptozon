@@ -31,7 +31,7 @@ namespace Cryptozon.Test.Infrastructure
       var purchasesRepo = new PurchasesRepo(mockDatabaseAdaper.Object);
 
       //when
-      var purchaseConfirmation = await purchasesRepo.PurchaseAsync("deanher@gmail.com",
+      var purchaseConfirmation = await purchasesRepo.PurchaseAsync(Guid.NewGuid(),
                                                                       purchasedCoins);
 
       //then

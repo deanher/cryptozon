@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Cryptozon.ApplicationService.Purchasing;
 using Cryptozon.Domain;
+using Cryptozon.Domain.Users;
 using Moq;
 using Xunit;
 
@@ -23,12 +24,16 @@ namespace Cryptozon.Test.ApplicationServices
                              (1027, 0.05m, 209.770552851m)
                            };
 
-      var expected = PurchaseConfirmation.Create(purchasedCoins.Sum(i => i.Quantity * i.UnitPrice), Guid.NewGuid());
-      mockPurchaseRepo.Setup(repo => repo.PurchaseAsync(It.IsAny<string>(),
+      var expectedPurchaseConfirmation = PurchaseConfirmation.Create(purchasedCoins.Sum(i => i.Quantity * i.UnitPrice), Guid.NewGuid());
+      mockPurchaseRepo.Setup(repo => repo.PurchaseAsync(It.IsAny<Guid>(),
                                                         It.IsAny<IEnumerable<(int CoinId, decimal Quantity, decimal UnitPrice)>>()))
-                      .ReturnsAsync(expected);
+                      .ReturnsAsync(expectedPurchaseConfirmation);
 
-      var productsPurchase = new ProductsPurchase(mockPurchaseRepo.Object);
+      var mockUserRepo = new Mock<IUserRepo>();
+      var expectedUser = User.Create("deanher@gmail.com", Guid.NewGuid().ToString("N"), Guid.NewGuid().ToString("N"), Guid.NewGuid());
+      mockUserRepo.Setup(repo => repo.GetUserAsync(It.IsAny<string>()))
+                  .ReturnsAsync(expectedUser); 
+      var productsPurchase = new ProductsPurchase(mockPurchaseRepo.Object, mockUserRepo.Object);
 
       //when
       var purchaseConfirmation = await productsPurchase.MakePurchaseAsync("deanher@gmail.com",
@@ -37,7 +42,7 @@ namespace Cryptozon.Test.ApplicationServices
       //then
       Assert.NotNull(purchaseConfirmation);
       Assert.IsType<Guid>(purchaseConfirmation.Reference); // Guids will be different so can't compare
-      Assert.Equal(expected.TotalAmount, purchaseConfirmation.TotalAmount);
+      Assert.Equal(expectedPurchaseConfirmation.TotalAmount, purchaseConfirmation.TotalAmount);
     }
   }
 }
