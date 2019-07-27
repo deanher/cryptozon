@@ -12,4 +12,8 @@
     <ProjectReference Include="..\Cryptozon.Domain\Cryptozon.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Tests\" />
+  </ItemGroup>
+
 </Project>

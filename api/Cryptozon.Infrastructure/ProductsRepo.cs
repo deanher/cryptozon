@@ -33,16 +33,22 @@ namespace Cryptozon.Infrastructure
     public async Task<IEnumerable<Product>> GetProductsAsync()
     {
       const string resource = @"/cryptocurrency/listings/latest";
-      var response = await _client.ExecuteAsync<dynamic>(resource, Method.GET, _headerValues);
+      var response = await _client.ExecuteAsync<CoinMarketCapResponse>(resource, Method.GET, _headerValues);
       if (response.Status.ErrorCode > 0)
         throw new ApplicationException(response.Status.ErrorMessage);
 
       return CreateProducts(response);
     }
 
-    private IEnumerable<Product> CreateProducts(dynamic marketCapResponse)
+    private IEnumerable<Product> CreateProducts(CoinMarketCapResponse response)
     {
-      return Enumerable.Empty<Product>();
+      // inject currency code if allowed to purchase in different currencies
+      const string currency = "USD";
+      var products = from coin in response.Data
+                     let quote = coin.Quote[currency]
+                     select Product.Create(coin.Id, coin.Name, coin.Symbol, quote.Price);
+
+      return products;
     }
   }
 }

@@ -1,4 +1,4 @@
-using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Cryptozon.ApplicationService;
@@ -16,18 +16,19 @@ namespace Cryptozon.Test
       //given
       var mock = new Mock<IProductsRepo>();
 
-      var expected = new[] { Product.Create("Bitcoin", "BTC", 10087.3779318m, DateTime.Now) }.AsEnumerable();
+      var expected = new List<Product> { Product.Create(1, "Bitcoin", "BTC", 10087.3779318m) };
       mock.Setup(repo => repo.GetProductsAsync())
           .ReturnsAsync(expected);
 
       var productRetrieval = new ProductsRetrieval(mock.Object);
 
       //when
-      var products = await productRetrieval.RetrieveProductsAsync();
+      var products = (await productRetrieval.RetrieveProductsAsync()).ToList();
 
       //then
       Assert.NotNull(products);
       Assert.NotEmpty(products);
+      Assert.Equal(expected.First(), products.First());
     }
   }
 }
