@@ -6,7 +6,7 @@ using Cryptozon.Domain.Products;
 using Moq;
 using Xunit;
 
-namespace Cryptozon.Test
+namespace Cryptozon.Test.ApplicationServices
 {
   public class ProductsRetrievalShould
   {

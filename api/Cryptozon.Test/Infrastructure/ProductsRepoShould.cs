@@ -6,7 +6,7 @@ using Moq;
 using RestSharp;
 using Xunit;
 
-namespace Cryptozon.Test
+namespace Cryptozon.Test.Infrastructure
 {
   public class ProductsRepoShould
   {
@@ -28,7 +28,7 @@ namespace Cryptozon.Test
                                   MaxSupply = 10000000l,
                                   TotalSupply = 99999l,
                                   Quote = new Dictionary<string, Quote>
-                                          {{"USD", new Quote{Price = 10087.3779318m}}}
+                                          {{"USD", new Quote{Price = 209.770552851m}}}
                                 }
                               }
                      };
