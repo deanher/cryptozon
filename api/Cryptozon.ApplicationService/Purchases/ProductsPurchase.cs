@@ -5,7 +5,7 @@ using Cryptozon.Domain.Purchases;
 using Cryptozon.Domain.Users;
 using Serilog;
 
-namespace Cryptozon.ApplicationService.Purchasing
+namespace Cryptozon.ApplicationService.Purchases
 {
   public class ProductsPurchase : ApplicationServiceBase
   {
@@ -21,7 +21,6 @@ namespace Cryptozon.ApplicationService.Purchasing
     public async Task<PurchaseConfirmation> MakePurchaseAsync(string username,
                                                               IEnumerable<(int CoinId, decimal Quantity, decimal UnitPrice)> coins)
     {
-
       try
       {
         var user = await _usersRepo.GetUserAsync(username);

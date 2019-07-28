@@ -29,10 +29,6 @@
 								"type": "text"
 							}
 						],
-						"body": {
-							"mode": "raw",
-							"raw": ""
-						},
 						"url": {
 							"raw": "https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest",
 							"protocol": "https",
@@ -79,10 +75,6 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": ""
-						},
 						"url": {
 							"raw": "http://localhost:5000/api/v1/products",
 							"protocol": "http",
@@ -102,29 +94,57 @@
 			]
 		},
 		{
-			"name": "Values",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": ""
-				},
-				"url": {
-					"raw": "http://localhost:5000/api/v1/values",
-					"protocol": "http",
-					"host": [
-						"localhost"
+			"name": "Purchases",
+			"item": [
+				{
+					"name": "Purchase Coin",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "c6cbf983-39fe-40af-85ce-8c55d44b6f04",
+								"exec": [
+									"pm.test(\"Correct data fields are returned\", () => {",
+									"    let jsonData = pm.response.json();",
+									"   pm.expect(jsonData[0]).to.have.property(\"reference\");",
+									"   pm.expect(jsonData[0]).to.have.property(\"totalAmount\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
 					],
-					"port": "5000",
-					"path": [
-						"api",
-						"v1",
-						"values"
-					]
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "[\n\t{\n\t\t\"coinId\": 1, \n\t\t\"quantity\": 0.005, \n\t\t\"unitPrice\": 9574.94033318\n\t},\n\t{\n\t\t\"coinId\": 1027, \n\t\t\"quantity\": 0.05,\n\t\t\"unitPrice\": 209.770552851\n\t}\n]"
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/v1/purchase",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"v1",
+								"purchase"
+							]
+						}
+					},
+					"response": []
 				}
-			},
-			"response": []
+			]
 		}
 	]
 }

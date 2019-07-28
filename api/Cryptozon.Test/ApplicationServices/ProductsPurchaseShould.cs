@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Cryptozon.ApplicationService.Purchasing;
+using Cryptozon.ApplicationService.Purchases;
 using Cryptozon.Domain.Purchases;
 using Cryptozon.Domain.Users;
 using Moq;
