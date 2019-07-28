@@ -33,6 +33,11 @@ Username: deanher@gmail.com
 Password: password
 ```
 
+## Docker
+
+* `docker build -t cryptozon .`
+* `docker run -d -p 5000:5000 -p 1433:1433 --name cryptozonapi cryptozon`
+
 ## Goal  
 
 The goal of the assignment is to give us insight on how confident you are with the c# stack in a e-commerce context
