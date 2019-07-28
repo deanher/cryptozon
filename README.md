@@ -4,6 +4,7 @@
 
 * Visual Studio 2019
 * .NET Core 2.2
+* SQL Server 2016 (Express)
 * Postman  
 
 ## Folder Structure  
@@ -20,6 +21,17 @@
 * Purchase currency will be USD.
 * Payment will be handled after the purchase is actioned by user and confirmed by the system, based on experience with online stores.
 * All that is required for payment is the order reference and the total amount.  
+
+## Login
+
+* Register your user using the postman request, `Register User`.
+* Then use the `Authenticate User` postman request to authenticate your user and receive your JWT token.
+* Alternatively, you may use the existing credentials:
+
+```text
+Username: deanher@gmail.com
+Password: password
+```
 
 ## Goal  
 
