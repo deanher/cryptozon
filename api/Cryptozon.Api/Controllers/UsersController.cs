@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
+using Cryptozon.Api.Models;
 using Cryptozon.ApplicationService.Users;
 using Cryptozon.Domain.Users;
 using Microsoft.AspNetCore.Http;
@@ -33,13 +34,5 @@ namespace Cryptozon.Api.Controllers
 
       return Ok();
     }
-  }
-
-  public class UserRequest
-  {
-    public string FirstName { get; set; }
-    public string Surname { get; set; }
-    public string Username { get; set; }
-    public string Password { get; set; }
   }
 }

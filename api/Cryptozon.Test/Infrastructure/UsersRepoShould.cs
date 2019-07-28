@@ -35,6 +35,7 @@ namespace Cryptozon.Test.Infrastructure
       Assert.Equal(expectedUser.UserId, user.UserId);
       Assert.Equal(expectedUser.Username, user.Username);
       Assert.Equal(expectedUser.PasswordSalt, user.PasswordSalt);
+      Assert.Equal(expectedUser.PasswordHash, user.PasswordHash);
     }
   }
 }

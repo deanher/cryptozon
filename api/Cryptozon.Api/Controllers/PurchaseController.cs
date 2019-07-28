@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
+using Cryptozon.Api.Models;
 using Cryptozon.ApplicationService.Purchases;
 using Cryptozon.Domain.Purchases;
 using Cryptozon.Domain.Users;

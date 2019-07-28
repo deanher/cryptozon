@@ -1,4 +1,4 @@
-﻿namespace Cryptozon.ApplicationService.Purchases
+﻿namespace Cryptozon.Api.Models
 {
   public class PurchaseRequest
   {
