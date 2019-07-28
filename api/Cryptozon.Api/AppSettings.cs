@@ -5,6 +5,12 @@
     public ExternalService CoinMarketCap { get; set; } 
     public Logging Logging { get; set; }
     public string[] AllowedHosts { get; set; }
+    public ConnectionStrings ConnectionStrings { get; set; }
+  }
+
+  public class ConnectionStrings
+  {
+    public string Sql { get; set; }
   }
 
   public class ExternalService

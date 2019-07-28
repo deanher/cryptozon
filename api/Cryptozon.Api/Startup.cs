@@ -1,5 +1,7 @@
 ﻿using System;
 using Cryptozon.Domain.Products;
+using Cryptozon.Domain.Purchases;
+using Cryptozon.Domain.Users;
 using Cryptozon.Infrastructure;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Cors.Infrastructure;
@@ -54,7 +56,10 @@ namespace Cryptozon.Api
     private void ConfigureDependencies(IServiceCollection services, AppSettings appSettings)
     {
       services.AddTransient<IHttpRestClient, RestSharpClient>(provider => new RestSharpClient(appSettings.CoinMarketCap.BaseUrl));
+      services.AddTransient<IDatabaseAdapter, SqlAdapter>(provider => new SqlAdapter(appSettings.ConnectionStrings.Sql));
       services.AddTransient<IProductsRepo, ProductsRepo>(provider => new ProductsRepo(provider.GetService<IHttpRestClient>(), appSettings.CoinMarketCap.Key));
+      services.AddTransient<IUsersRepo, UsersRepo>();
+      services.AddTransient<IPurchasesRepo, PurchasesRepo>();
     }
 
     private Action<CorsOptions> ConfigureCors(AppSettings appSettings)

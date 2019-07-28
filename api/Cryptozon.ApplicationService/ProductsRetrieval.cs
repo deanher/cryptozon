@@ -7,7 +7,7 @@ using Serilog;
 
 namespace Cryptozon.ApplicationService
 {
-  public class ProductsRetrieval
+  public class ProductsRetrieval : ApplicationServiceBase
   {
     private readonly IProductsRepo _productsRepo;
 
@@ -15,9 +15,6 @@ namespace Cryptozon.ApplicationService
     {
       _productsRepo = productsRepo;
     }
-
-    public bool HasError => !string.IsNullOrWhiteSpace(ErrorMessage);
-    public string ErrorMessage { get; private set; }
 
     public async Task<IEnumerable<Product>> RetrieveProductsAsync()
     {
@@ -27,7 +24,7 @@ namespace Cryptozon.ApplicationService
       }
       catch (Exception ex)
       {
-        ErrorMessage = ex.Message;
+        ErrorMessage = "Our apologies! We could not retrieve available cryptocurrencies at this time. Please try again.";
         Log.Error(ex, ErrorMessage);
       }
 
