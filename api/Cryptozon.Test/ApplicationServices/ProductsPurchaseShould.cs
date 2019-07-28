@@ -40,6 +40,7 @@ namespace Cryptozon.Test.ApplicationServices
                                                                           purchasedCoins);
 
       //then
+      Assert.False(productsPurchase.HasError, productsPurchase.ErrorMessage);
       Assert.NotNull(purchaseConfirmation);
       Assert.IsType<Guid>(purchaseConfirmation.Reference); // Guids will be different so can't compare
       Assert.Equal(expectedPurchaseConfirmation.TotalAmount, purchaseConfirmation.TotalAmount);

@@ -6,6 +6,9 @@
     public Logging Logging { get; set; }
     public string[] AllowedHosts { get; set; }
     public ConnectionStrings ConnectionStrings { get; set; }
+
+    public string Secret { get; set; }
+    public int TokenExpiry { get; set; }
   }
 
   public class ConnectionStrings
