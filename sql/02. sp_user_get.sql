@@ -10,7 +10,9 @@ as
 begin
   begin try
     select UserId,
-           Username, 
+           FirstName,
+           Surname,
+           Username,
            PasswordSalt,
            PasswordHash
       from Users

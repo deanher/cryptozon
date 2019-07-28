@@ -13,8 +13,10 @@ go
 
 create table Cryptozon.dbo.Users
      ( UserId        uniqueidentifier default newsequentialid(),
+       FirstName     nvarchar(250)    not null,
+       Surname       nvarchar(250)    not null,
        Username      nvarchar(100)    not null,
-       PasswordSalt  nvarchar(100)    not null,
+       PasswordSalt  nvarchar(200)    not null,
        PasswordHash  nvarchar(100)    not null,
        LastEditedOn  datetime         not null,
        constraint PK_Users_UserId primary key nonclustered (UserId),

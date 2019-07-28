@@ -17,8 +17,8 @@ namespace Cryptozon.Test.Infrastructure
       //given
       var mockDatabaseAdapter = new Mock<IDatabaseAdapter>();
 
-      var expectedUser = new User("deanher@gmail.com",
-                                  Guid.NewGuid().ToString("N"),
+      var expectedUser = new User("Dean", "Herringer", "deanher@gmail.com",
+                                  Guid.NewGuid().ToString("N"), 
                                   Guid.NewGuid().ToString("N"),
                                   Guid.NewGuid());
       mockDatabaseAdapter.Setup(adapter =>
