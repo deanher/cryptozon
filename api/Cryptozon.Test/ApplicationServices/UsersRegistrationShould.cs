@@ -25,8 +25,7 @@ namespace Cryptozon.Test.ApplicationServices
       var user = await userRegistration.RegisterAsync("Dean", "Herringer", "deanher@gmail.com", "password");
 
       //then
-      Assert.False(userRegistration.HasError);
-      Assert.Null(userRegistration.ErrorMessage);
+      Assert.False(userRegistration.HasError, userRegistration.ErrorMessage);
       Assert.NotNull(user);
       Assert.Equal(expected.FirstName, user.FirstName);
       Assert.Equal(expected.Surname, user.Surname);

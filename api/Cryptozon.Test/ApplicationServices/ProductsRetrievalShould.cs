@@ -26,6 +26,7 @@ namespace Cryptozon.Test.ApplicationServices
       var products = (await productRetrieval.RetrieveProductsAsync()).ToList();
 
       //then
+      Assert.False(productRetrieval.HasError, productRetrieval.ErrorMessage);
       Assert.NotNull(products);
       Assert.NotEmpty(products);
       Assert.Equal(expected.First(), products.First());
