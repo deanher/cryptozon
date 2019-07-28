@@ -180,6 +180,38 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "Authenticate User",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"username\": \"deanher@gmail.com\",\r\n  \"password\": \"password\"\r\n}\r\n"
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/v1/authenticate",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"v1",
+								"authenticate"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		}
