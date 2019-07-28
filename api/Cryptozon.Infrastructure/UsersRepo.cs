@@ -24,8 +24,12 @@ namespace Cryptozon.Infrastructure
     }
 
     public async Task<User> RegisterUserAsync(string firstName, string surname, string username, string passwordSalt,
-                                        string passwordHash)
+                                              string passwordHash)
     {
+      var param = new DynamicParameters(new { firstName, surname, username, passwordSalt, passwordHash});
+
+      await _database.ExecuteAsync("sp_user_add", param);
+
       return new User(firstName, surname, username, passwordSalt, passwordHash);
     }
   }
