@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
+﻿using System.Net;
 using System.Threading.Tasks;
 using Cryptozon.Api.Models;
 using Cryptozon.ApplicationService.Users;
 using Cryptozon.Domain.Users;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Cryptozon.Api.Controllers
