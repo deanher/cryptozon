@@ -22,5 +22,11 @@ namespace Cryptozon.Infrastructure
       var result = await _database.ExecuteQueryAsync<User>("sp_user_get", param);
       return result.Single();
     }
+
+    public async Task<User> RegisterUserAsync(string firstName, string surname, string username, string passwordSalt,
+                                        string passwordHash)
+    {
+      return new User(firstName, surname, username, passwordSalt, passwordHash);
+    }
   }
 }

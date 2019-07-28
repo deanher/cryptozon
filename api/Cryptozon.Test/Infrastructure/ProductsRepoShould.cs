@@ -25,8 +25,8 @@ namespace Cryptozon.Test.Infrastructure
                                   Id = 1027,
                                   Name = "Ethereum",
                                   Symbol = "ETH",
-                                  MaxSupply = 10000000l,
-                                  TotalSupply = 99999l,
+                                  MaxSupply = 10000000L,
+                                  TotalSupply = 99999L,
                                   Quote = new Dictionary<string, Quote>
                                           {{"USD", new Quote{Price = 209.770552851m}}}
                                 }

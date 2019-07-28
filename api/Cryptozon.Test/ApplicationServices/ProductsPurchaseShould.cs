@@ -30,7 +30,7 @@ namespace Cryptozon.Test.ApplicationServices
                       .ReturnsAsync(expectedPurchaseConfirmation);
 
       var mockUserRepo = new Mock<IUsersRepo>();
-      var expectedUser = new User("deanher@gmail.com", Guid.NewGuid().ToString("N"), Guid.NewGuid().ToString("N"), Guid.NewGuid());
+      var expectedUser = new User("Dean", "Herringer", "deanher@gmail.com", Guid.NewGuid().ToString("N"), Guid.NewGuid().ToString("N"), Guid.NewGuid());
       mockUserRepo.Setup(repo => repo.GetUserAsync(It.IsAny<string>()))
                   .ReturnsAsync(expectedUser); 
       var productsPurchase = new ProductsPurchase(mockPurchaseRepo.Object, mockUserRepo.Object);
