@@ -6,10 +6,12 @@ using Cryptozon.Api.Models;
 using Cryptozon.ApplicationService.Purchases;
 using Cryptozon.Domain.Purchases;
 using Cryptozon.Domain.Users;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Cryptozon.Api.Controllers
 {
+  [Authorize]
   [Route("api/v1/[controller]")]
   [ApiController]
   public class PurchaseController : ControllerBase

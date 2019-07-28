@@ -1,8 +1,11 @@
 ﻿using System;
+using System.Text;
+using System.Threading.Tasks;
 using Cryptozon.Domain.Products;
 using Cryptozon.Domain.Purchases;
 using Cryptozon.Domain.Users;
 using Cryptozon.Infrastructure;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Cors.Infrastructure;
 using Microsoft.AspNetCore.Hosting;
@@ -10,6 +13,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Microsoft.IdentityModel.Tokens;
 using Serilog;
 using Serilog.Core;
 using Serilog.Events;
@@ -37,6 +41,8 @@ namespace Cryptozon.Api
       loggerFactory.AddSerilog();
       app.UseCors("CorsPolicy");
 
+      app.UseAuthentication();
+
       app.UseMvc();
     }
 
@@ -51,6 +57,48 @@ namespace Cryptozon.Api
       services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
       ConfigureDependencies(services, appSettings);
+      ConfigureAuthentication(services, appSettings);
+    }
+
+    private void ConfigureAuthentication(IServiceCollection services, AppSettings appSettings)
+    {
+      var key = Encoding.ASCII.GetBytes(appSettings.Secret);
+      var tokenValidationParameters = new TokenValidationParameters
+                                      {
+                                        ValidateIssuerSigningKey = true,
+                                        IssuerSigningKey = new SymmetricSecurityKey(key),
+                                        ValidateIssuer = false,
+                                        ValidateAudience = false
+                                      };
+      services.AddAuthentication(x =>
+                                 {
+                                   x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                                   x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                                 })
+              .AddJwtBearer(x =>
+                            {
+                              x.Events = new JwtBearerEvents
+                                         {
+                                           OnTokenValidated = ValidateToken
+                                         };
+                              x.RequireHttpsMetadata = false;
+                              x.SaveToken = true;
+                              x.TokenValidationParameters = tokenValidationParameters;
+                            });
+    }
+
+    private Task ValidateToken(TokenValidatedContext context)
+    {
+      var userService = context.HttpContext.RequestServices.GetRequiredService<IUsersRepo>();
+      var username = context.Principal.Identity.Name;
+      var user = userService.GetUserAsync(username);
+      if (user == null)
+      {
+        // return unauthorized if user no longer exists
+        context.Fail("Unauthorized");
+      }
+
+      return Task.CompletedTask;
     }
 
     private void ConfigureDependencies(IServiceCollection services, AppSettings appSettings)

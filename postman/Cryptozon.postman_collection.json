@@ -70,6 +70,16 @@
 								],
 								"type": "text/javascript"
 							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "7ec367f8-55f0-4bfb-a245-9594ff55b5b5",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
 						}
 					],
 					"request": {
@@ -106,8 +116,8 @@
 								"exec": [
 									"pm.test(\"Correct data fields are returned\", () => {",
 									"    let jsonData = pm.response.json();",
-									"   pm.expect(jsonData[0]).to.have.property(\"reference\");",
-									"   pm.expect(jsonData[0]).to.have.property(\"totalAmount\");",
+									"   pm.expect(jsonData).to.have.property(\"reference\");",
+									"   pm.expect(jsonData).to.have.property(\"totalAmount\");",
 									"});"
 								],
 								"type": "text/javascript"
@@ -214,6 +224,58 @@
 					"response": []
 				}
 			]
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{token}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "770d0e10-3984-4f6e-bc10-4530dded7cc1",
+				"type": "text/javascript",
+				"exec": [
+					"pm.sendRequest({",
+					"    url: \"http://localhost:5000/api/v1/authenticate\",",
+					"    method: 'POST',",
+					"    body: {",
+					"        mode: 'raw',",
+					"        raw: JSON.stringify({username: 'deanher@gmail.com', password: 'password'})",
+					"    },",
+					"    header: {",
+					"        'Content-Type': 'application/json'",
+					"    }",
+					"}, function (err, res) {",
+					"    pm.environment.set(\"token\", res.json().token);",
+					"});"
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "178d230a-4cef-4525-ac46-5d1d13bbd663",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"id": "fb2aeda9-6887-4317-8198-b0a10db468cd",
+			"key": "token",
+			"value": "",
+			"type": "string"
 		}
 	]
 }
