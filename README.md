@@ -10,7 +10,6 @@
 ## Folder Structure  
 
 * api     - contains the WebApi code
-* docs    - contains documentation
 * postman - contains postman smoke tests  
 
 ## Assumptions
