@@ -1,5 +1,6 @@
 ﻿namespace Cryptozon.Api
 {
+  // note: this should move to some key vault instead of appSettings.json, i.e. Azure KeyVault or Hashicorp vault, etc.
   public class AppSettings
   {
     public ExternalService CoinMarketCap { get; set; } 
